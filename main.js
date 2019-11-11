@@ -9,8 +9,8 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 715,
-    width: 1200,
+    height: 815,
+    width: 800,
     minWidth: 600,
     minHeight: 200,
     center: true,
@@ -19,7 +19,6 @@ function createWindow () {
     } //dunno about why to use it
   })
   
-  mainWindow.maximize()
   // and load the index.html of the app.
   mainWindow.loadFile('src/html/index.html')
 
