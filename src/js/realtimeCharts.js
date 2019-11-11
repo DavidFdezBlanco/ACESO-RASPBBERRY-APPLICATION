@@ -114,7 +114,7 @@ function overwriteCharts( metricList ){
                     y1:metricList.toplimit,
                     line:
                     {
-                        color: 'rgb(0, 255, 0)',
+                        color: 'rgb(255, 0, 0)',
                         width: 4
                     }
                 }
@@ -151,7 +151,7 @@ var htmlList = document.getElementById("listOfMetrics");
 
 
 var listOfMetrics = [
-                     {Name: "pulse",downlimit: 70,toplimit: 100, downpossible:50, toppossible: 150, unit: "BPM" },
+                     {Name: "pulse",downlimit: 60,toplimit: 140, downpossible:40, toppossible: 170, unit: "BPM" },
                      {Name: "temperature",downlimit: 35,toplimit: 38, downpossible:34, toppossible: 40, unit: "ºC"}
                     ];
 
