@@ -54,7 +54,7 @@ client.connect("192.168.43.225", 8081) #connect to broker
 client.loop_start() #start the loop
 
 print("Subscribing to topic toServer")
-client.subscribe("pulse")
+client.subscribe("Pulse")
 
 db = TinyDB("db.json") #init db
 updateTxt()

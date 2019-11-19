@@ -1,3 +1,23 @@
+function readProfile(listOfMetrics){
+    text = readTextFile("../../Backend/userData.txt");
+    textByLanes = text.split("\n")
+    window.UserID = textByLanes[0].split(":")[1]
+    window.UserName = textByLanes[1].split(":")[1]
+    window.Doctor = textByLanes[2].split(":")[1]
+    window.Hospital = textByLanes[3].split(":")[1]
+    window.HospitalAddr = textByLanes[4].split(":")[1]
+    window.ContactPhone = textByLanes[5].split(":")[1]
+    window.Captors = textByLanes[6].split(":")[1]
+    window.numCaptors = Captors.split(",").length
+    var i = 0
+    for (i = 0; i < numCaptors; i++) {
+        firstSplit = textByLanes[7+i].split(";");
+        secondSplit = firstSplit[1].split(",");
+        var metricToAdd = {Name: firstSplit[0],downWarn: parseInt(secondSplit[0].split(":")[1]), topWarn: parseInt(secondSplit[1].split(":")[1]) , downlimit: parseInt(secondSplit[2].split(":")[1]), toplimit: parseInt(secondSplit[3].split(":")[1]), downpossible: parseInt(secondSplit[4].split(":")[1]) , toppossible: parseInt(secondSplit[5].split(":")[1]), unit: secondSplit[6].split(":")[1]}
+        console.log(metricToAdd)
+        listOfMetrics.push(metricToAdd)
+    }
+}
 function getData(label) {
     text = readTextFile("../../Backend/data.txt");
     textByLanes = text.split("\n")
@@ -91,44 +111,60 @@ function overwriteCharts( metricList ){
                   color: '#7f7f7f'
               }
            }
-        },
-        shapes:
-            [
-                {
-                    type: 'line',
-                    x0: getDateDownLimit(),
-                    y0: metricList.downlimit,
-                    x1: getDateTopLimit(),
-                    y1:metricList.downlimit,
-                    line:
-                    {
-                        color: 'rgb(255, 0, 0)',
-                        width: 4
-                    }
-                },
-                {
-                    type: 'line',
-                    x0: getDateDownLimit(),
-                    y0: metricList.toplimit,
-                    x1: getDateTopLimit(),
-                    y1:metricList.toplimit,
-                    line:
-                    {
-                        color: 'rgb(255, 0, 0)',
-                        width: 4
-                    }
-                }
-            ]
+        }
         };
     data = this.getData(metricList.Name);
-    var dataForm = [{
+    var dataForm = {
       x: data.x,
       y: data.y,
-      type: 'scatter',
-      color: "#fffff"
-    }];
-    console.log(metricList.Name)
-    Plotly.newPlot(metricList.Name,dataForm,layout,{staticPlot: true});
+      type: 'markers',
+      marker: {
+        size: 4,
+        color: "#000000"
+      }
+    };
+    var downlimit = {
+        x: [getDateDownLimit(),getDateTopLimit()],
+        y: [metricList.downlimit, metricList.downlimit],
+        fill: 'tozeroy',
+        type: 'scatter',
+        mode: 'none',
+        fillcolor: "rgba(196, 19, 0, 0.5)"
+    }
+    var downWarn = {
+        x: [getDateDownLimit(),getDateTopLimit()],
+        y: [metricList.downWarn,metricList.downWarn],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        fillcolor: "rgba(255, 255, 102,0.5)"
+    }
+    var neutral = {
+        x: [getDateDownLimit(),getDateTopLimit()],
+        y: [metricList.topWarn, metricList.topWarn],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        fillcolor: 'rgba(0, 255, 34,0.2)'
+    }
+    var topWarn = {
+        x: [getDateDownLimit(),getDateTopLimit()],
+        y: [metricList.toplimit,metricList.toplimit],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        fillcolor: "rgba(255, 255, 102,0.5)"
+    }
+    var toplimit = {
+        x: [getDateDownLimit(),getDateTopLimit()],
+        y: [metricList.toppossible,metricList.toppossible],
+        fill: 'tonexty',
+        type: 'scatter',
+        mode: 'none',
+        fillcolor: "rgba(196, 19, 0, 0.5)"
+    }
+    var totalData = [downlimit,downWarn,neutral,topWarn,toplimit,dataForm]
+    Plotly.newPlot(metricList.Name,totalData,layout,{staticPlot: true});
 }
 
 function createmyElement(metricList){
@@ -208,13 +244,12 @@ function createGraph(metric, swipWrap, swipCont)
 }
 
 
-var listOfMetrics = [
-                     {Name: "pulse",downlimit: 60,toplimit: 140, downpossible:40, toppossible: 170, unit: "BPM" },
-                     {Name: "temperature",downlimit: 35,toplimit: 38, downpossible:34, toppossible: 40, unit: "ºC"}
-                    ];
+var listOfMetrics = [];
 
 //To be done the adaptative template
+//var listOfMetrics;
 
+readProfile(listOfMetrics)
 
 createPlotlyDisplay(listOfMetrics);
 

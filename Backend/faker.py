@@ -10,7 +10,7 @@ for line in range(0,3600000):
         date2 = datetime.datetime.fromtimestamp(data/1000.0)
         date = date2.strftime('%Y-%m-%d %H:%M:%S')
         value = 80 - random.randint(0, 10)
-        stringPlot = "[pulse] " + str(value) +",sensor1,"+date+" \n"
+        stringPlot = "[Pulse] " + str(value) +",sensor1,"+date+" \n"
         file1 = open("data.txt","a")
         file1.write(stringPlot)
 for line in range(0,3600000):
@@ -19,6 +19,6 @@ for line in range(0,3600000):
         date2 = datetime.datetime.fromtimestamp(data/1000.0)
         date = date2.strftime('%Y-%m-%d %H:%M:%S')
         value = 37 - random.randint(0, 2)
-        stringPlot = "[temperature] " + str(value) +",sensor2,"+date+" \n"
+        stringPlot = "[Temperature] " + str(value) +",sensor2,"+date+" \n"
         file1 = open("data.txt","a")
         file1.write(stringPlot)
