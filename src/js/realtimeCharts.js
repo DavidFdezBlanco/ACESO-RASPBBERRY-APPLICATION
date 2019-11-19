@@ -42,7 +42,7 @@ function getDateDownLimit(){
     var today = new Date();
     var month = parseInt(('0'+today.getMonth()).slice(-2)) + 1;
     var day = ('0'+today.getDate()).slice(-2);
-    var hour = parseInt(('0'+today.getHours()).slice(-2)) - 1;
+    var hour = parseInt(('0'+today.getHours()).slice(-2)) - 2;
     var mins = ('0'+today.getMinutes()).slice(-2);
     var secs = ('0'+today.getSeconds()).slice(-2);
     var date = today.getFullYear()+'-'+month+'-'+day;
@@ -54,7 +54,7 @@ function getDateTopLimit(){
     var today = new Date();
     var month = parseInt(('0'+today.getMonth()).slice(-2)) + 1;
     var day = ('0'+today.getDate()).slice(-2);
-    var hour = parseInt(('0'+today.getHours()).slice(-2));
+    var hour = parseInt(('0'+today.getHours()).slice(-2))-1;
     var mins = ('0'+today.getMinutes()).slice(-2);
     var secs = ('0'+today.getSeconds()).slice(-2);
     var date = today.getFullYear()+'-'+month+'-'+day;
@@ -128,7 +128,7 @@ function overwriteCharts( metricList ){
       color: "#fffff"
     }];
     console.log(metricList.Name)
-    Plotly.newPlot(metricList.Name,dataForm,layout);
+    Plotly.newPlot(metricList.Name,dataForm,layout,{staticPlot: true});
 }
 
 function createmyElement(metricList){
@@ -147,7 +147,65 @@ function createmyElement(metricList){
           ].join('\n');
 }
 
-var htmlList = document.getElementById("listOfMetrics");
+function createPlotlyDisplay(listOfMetrics)
+{
+    //Retrieve body element
+    var body = document.getElementsByTagName('body')[0];
+    
+    //creating swipper and wrapper divs
+    swipCont = document.createElement("div");
+    swipCont.className = "swiper-container hero-slider";
+
+    swipWrap = document.createElement("div");
+    swipWrap.className = "swiper-wrapper";
+    swipWrap.id = "swipper";
+    
+    for (let metric in listOfMetrics)
+    {
+        createGraph(listOfMetrics[metric],swipWrap,swipCont);
+    }
+    
+    pagWrap = document.createElement("div");
+    pagWrap.className = "pagination-wrap position-absolute w-100";
+    swipPag = document.createElement("div");
+    swipPag.className = "swiper-pagination d-flex flex-row flex-md-column";
+
+    body.appendChild(swipCont);
+    pagWrap.appendChild(swipPag);
+    swipCont.appendChild(pagWrap);
+
+    body.insertBefore(swipCont,body.childNodes[2])
+    
+}
+
+function createGraph(metric, swipWrap, swipCont)
+{
+    swipSlide = document.createElement("div");
+    swipSlide.className = "swiper-slide hero-content-wrap";
+
+    heroCont = document.createElement("div");
+    heroCont.className = "hero-content-overlay position-absolute w-100 h-100";
+
+    contain = document.createElement("div");
+    contain.className = "container h-100";
+
+    row = document.createElement("div");
+    row.className = "row h-100";
+
+    col = document.createElement("div");
+    col.className = "col-12 col-lg-6 d-flex flex-column justify-content-center align-items-start";
+    
+    flag = document.createElement("div");
+    flag.id = metric.Name;
+    
+    col.appendChild(flag);
+    row.appendChild(col);
+    contain.appendChild(row);
+    heroCont.appendChild(contain);
+    swipSlide.appendChild(heroCont);
+    swipWrap.appendChild(swipSlide);
+    swipCont.appendChild(swipWrap);
+}
 
 
 var listOfMetrics = [
@@ -156,13 +214,9 @@ var listOfMetrics = [
                     ];
 
 //To be done the adaptative template
-//var body = document.getElementsByTagName('body')[0];
-//console.log(body.childNodes[50])
-//newdiv = document.createElement("temperature");
-//newdiv.id = "temperature";                      //add an id
-//body.appendChild(newdiv);                 //append to the doc.body
-//body.insertBefore(newdiv,body.childNodes[2])
 
+
+createPlotlyDisplay(listOfMetrics);
 
 for (let metric in listOfMetrics)
 {
