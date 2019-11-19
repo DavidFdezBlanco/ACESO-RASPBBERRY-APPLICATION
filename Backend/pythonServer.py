@@ -25,7 +25,6 @@ def updateTxt():
         data = db.search(Query()['topic']=="pulse")
         for key, value, timestamp in data:
             f.write("[" + key + "] " + value + ","+timestamp+"\n")
-
     threading.Timer(10, updateTxt).start() #Update the txt every 10 seconds
 
 ############
