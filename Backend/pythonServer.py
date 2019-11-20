@@ -10,21 +10,43 @@ import time, threading
 
 
 proffessionalID = "IDRASP1"
+userdId = "Johnny"
+dbMaxSize = 10
 
 ############
-def sendToBlockchain():
-    print()
+def sendToBlockchain(input):
+    bdb = BigchainDB(bdb_root_url) #init bigchainDb
+    user = generate_keypair()
+
+    #encrypt the input
     #crypto.encryptFile(password, fileName)
-    #To do
+
+    prepared_creation_tx = bdb.transactions.prepare(
+        operation='CREATE',
+        signers=user.public_key,
+        asset=input
+    )
+    fulfilled_creation_tx = bdb.transactions.fulfill(
+        prepared_creation_tx, private_keys=user.private_key)
+    bdb.transactions.send_commit(fulfilled_creation_tx)
+
+    print("A total of " + str(dbMaxSize) + " were sent to the blockchain")
 
 ############
 def updateTxt():
     db = TinyDB("db.json") #init db
-    with open('data.txt', 'w') as f:
-        #Just for pulse for the moment
-        data = db.search(Query()['topic']=="pulse")
-        for key, value, timestamp in data:
-            f.write("[" + key + "] " + value + ","+timestamp+"\n")
+    if(len(db)>dbMaxSize): #if db is too big, send everything to the blockchain
+        print("sending" + str(db.all()))
+        block = {'data': {'user': userdId, "content":str(db.all())},}
+        #To query: bdb.assets.get(search='Johnny')
+        sendToBlockchain(block)
+        open('db.json', 'w').close() #resets the local db
+    else:
+        with open('data.txt', 'w') as f:
+            #Just for pulse for the moment
+            data = db.search(Query()['topic']=="pulse")
+            for key, value, timestamp in data:
+                f.write("[" + key + "] " + value + ","+timestamp+"\n")
     threading.Timer(10, updateTxt).start() #Update the txt every 10 seconds
 
 ############
@@ -50,6 +72,7 @@ print("Creating new instance")
 client = mqtt.Client("P1") #create new instance
 client.on_message=on_message #attach function to callback
 print("Connecting to broker")
+
 client.connect("192.168.43.225", 8081) #connect to broker
 client.loop_start() #start the loop
 
