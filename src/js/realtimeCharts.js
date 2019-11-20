@@ -14,10 +14,10 @@ function readProfile(listOfMetrics){
         firstSplit = textByLanes[7+i].split(";");
         secondSplit = firstSplit[1].split(",");
         var metricToAdd = {Name: firstSplit[0],downWarn: parseInt(secondSplit[0].split(":")[1]), topWarn: parseInt(secondSplit[1].split(":")[1]) , downlimit: parseInt(secondSplit[2].split(":")[1]), toplimit: parseInt(secondSplit[3].split(":")[1]), downpossible: parseInt(secondSplit[4].split(":")[1]) , toppossible: parseInt(secondSplit[5].split(":")[1]), unit: secondSplit[6].split(":")[1]}
-        console.log(metricToAdd)
         listOfMetrics.push(metricToAdd)
     }
 }
+
 function getData(label) {
     text = readTextFile("../../Backend/data.txt");
     textByLanes = text.split("\n")
@@ -243,14 +243,20 @@ function createGraph(metric, swipWrap, swipCont)
     swipCont.appendChild(swipWrap);
 }
 
+function fullfillForm()
+{
+    document.getElementById('patientid').innerHTML = UserID;
+    document.getElementById('patientname').innerHTML = UserName;
+    document.getElementById('doctor').innerHTML = Doctor;
+    document.getElementById('phone').innerHTML = ContactPhone;
+    document.getElementById('buttonPhone').innerHTML = ContactPhone;
+    document.getElementById('hospital').innerHTML = Hospital;
+    document.getElementById('hospaddress').innerHTML = HospitalAddr;
+}
 
 var listOfMetrics = [];
-
-//To be done the adaptative template
-//var listOfMetrics;
-
 readProfile(listOfMetrics)
-
+fullfillForm();
 createPlotlyDisplay(listOfMetrics);
 
 for (let metric in listOfMetrics)

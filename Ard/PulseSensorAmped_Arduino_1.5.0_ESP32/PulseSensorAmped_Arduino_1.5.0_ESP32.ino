@@ -89,7 +89,7 @@ void sendShit(){
  messageToSend.toCharArray(toSend,messageToSend.length());
  
  delay(10);
- client.publish("pulse", toSend);
+ client.publish("Pulse", toSend);
  Serial.println("Sent" + String(messageToSend));
 }
 #define PROCESSING_VISUALIZER 1
