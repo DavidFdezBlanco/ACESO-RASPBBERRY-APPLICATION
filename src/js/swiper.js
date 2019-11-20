@@ -4582,6 +4582,7 @@ var Pagination = {
     // Current/Total
     var current;
     var total = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+    console.log(total)
     if (swiper.params.loop) {
       current = Math.ceil((swiper.activeIndex - swiper.loopedSlides) / swiper.params.slidesPerGroup);
       if (current > slidesLength - 1 - (swiper.loopedSlides * 2)) {
@@ -4677,9 +4678,29 @@ var Pagination = {
     var paginationHTML = '';
     if (params.type === 'bullets') {
       var numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
+      text = readTextFile("../../Backend/userData.txt");
+    textByLanes = text.split("\n")
+    window.UserID = textByLanes[0].split(":")[1]
+    window.UserName = textByLanes[1].split(":")[1]
+    window.Doctor = textByLanes[2].split(":")[1]
+    window.Hospital = textByLanes[3].split(":")[1]
+    window.HospitalAddr = textByLanes[4].split(":")[1]
+    window.ContactPhone = textByLanes[5].split(":")[1]
+    window.Captors = textByLanes[6].split(":")[1]
+    window.numCaptors = Captors.split(",").length
+    var i = 0
+    for (i = 0; i < numCaptors; i++) {
+        firstSplit = textByLanes[7+i].split(";");
+        secondSplit = firstSplit[1].split(",");
+        var metricToAdd = {Name: firstSplit[0],downWarn: parseInt(secondSplit[0].split(":")[1]), topWarn: parseInt(secondSplit[1].split(":")[1]) , downlimit: parseInt(secondSplit[2].split(":")[1]), toplimit: parseInt(secondSplit[3].split(":")[1]), downpossible: parseInt(secondSplit[4].split(":")[1]) , toppossible: parseInt(secondSplit[5].split(":")[1]), unit: secondSplit[6].split(":")[1], short: secondSplit[7].split(":")[1]}
+        listOfMetrics.push(metricToAdd)
+    }
       for (var i = 0; i < numberOfBullets; i += 1) {
         if (params.renderBullet) {
-          paginationHTML += params.renderBullet.call(swiper, i, params.bulletClass);
+          paginationHTML += params.renderBullet.call(swiper, listOfMetrics[i].short + "" , params.bulletClass);
+          var res1 = paginationHTML.replace("0", " ");
+          var res2 = res1.replace("1", " ");
+          paginationHTML = res2;
         } else {
           paginationHTML += "<" + (params.bulletElement) + " class=\"" + (params.bulletClass) + "\"></" + (params.bulletElement) + ">";
         }
@@ -4722,7 +4743,7 @@ var Pagination = {
       swiper.params.uniqueNavElements &&
       typeof params.el === 'string' &&
       $el.length > 1 &&
-      swiper.$el.find(params.el).length === 1
+      swiper.$el.find(params.el).length === 0
     ) {
       $el = swiper.$el.find(params.el);
     }
@@ -4774,7 +4795,7 @@ var Pagination$1 = {
       bulletElement: 'span',
       clickable: false,
       hideOnClick: false,
-      renderBullet: null,
+      renderBullet: true,
       renderProgressbar: null,
       renderFraction: null,
       renderCustom: null,

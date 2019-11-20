@@ -13,7 +13,10 @@ function readProfile(listOfMetrics){
     for (i = 0; i < numCaptors; i++) {
         firstSplit = textByLanes[7+i].split(";");
         secondSplit = firstSplit[1].split(",");
-        var metricToAdd = {Name: firstSplit[0],downWarn: parseInt(secondSplit[0].split(":")[1]), topWarn: parseInt(secondSplit[1].split(":")[1]) , downlimit: parseInt(secondSplit[2].split(":")[1]), toplimit: parseInt(secondSplit[3].split(":")[1]), downpossible: parseInt(secondSplit[4].split(":")[1]) , toppossible: parseInt(secondSplit[5].split(":")[1]), unit: secondSplit[6].split(":")[1]}
+        var metricToAdd = {Name: firstSplit[0],downWarn: parseInt(secondSplit[0].split(":")[1]), topWarn: parseInt(secondSplit[1].split(":")[1]) , downlimit: parseInt(secondSplit[2].split(":")[1]), toplimit: parseInt(secondSplit[3].split(":")[1]), downpossible: parseInt(secondSplit[4].split(":")[1]) , toppossible: parseInt(secondSplit[5].split(":")[1]), unit: secondSplit[6].split(":")[1],
+            short: secondSplit[7].split(":")[1]
+        }
+        console.log(metricToAdd)
         listOfMetrics.push(metricToAdd)
     }
 }
@@ -187,7 +190,6 @@ function createPlotlyDisplay(listOfMetrics)
 {
     //Retrieve body element
     var body = document.getElementsByTagName('body')[0];
-    
     //creating swipper and wrapper divs
     swipCont = document.createElement("div");
     swipCont.className = "swiper-container hero-slider";
@@ -254,6 +256,11 @@ function fullfillForm()
     document.getElementById('hospaddress').innerHTML = HospitalAddr;
 }
 
+function changeBullets()
+{
+    console.log(document.getElementsByTagName('span')[2])
+}
+
 var listOfMetrics = [];
 readProfile(listOfMetrics)
 fullfillForm();
@@ -264,6 +271,10 @@ for (let metric in listOfMetrics)
     overwriteCharts(listOfMetrics[metric]);
     setInterval(function(){overwriteCharts(listOfMetrics[metric]);},5000)
 }
+
+changeBullets()
+
+
 
 
 

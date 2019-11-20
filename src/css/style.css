@@ -250,7 +250,7 @@ a:hover, a:active {
 
 .hero-slider .pagination-wrap {
     top: 50%;
-    left: 0;
+    left: 15px;
     z-index: 99;
     width: 120px;
     margin-top: -60px;

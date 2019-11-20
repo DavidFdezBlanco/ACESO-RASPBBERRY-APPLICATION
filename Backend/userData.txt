@@ -5,5 +5,5 @@ Hospital: Clinique Tonkin
 Hospital Address: 158 Rue Léon Blum, 69100 Villeurbanne
 ContactPhone: +33 (0)7 83 31 04 04
 Captors: Pulse,Temperature
-Pulse; downWarn: 60, topWarn: 140,downlimit: 50, toplimit: 160, downpossible:30, toppossible: 180, unit: BPM
-Temperature; downWarn: 35.3, topWarn: 37.5,downlimit: 34.5, toplimit: 38.5, downpossible: 33.5, toppossible: 40, unit: ºC
+Pulse; downWarn: 60, topWarn: 140,downlimit: 50, toplimit: 160, downpossible:30, toppossible: 180, unit: BPM, short: Pulse
+Temperature; downWarn: 35.3, topWarn: 37.5,downlimit: 34.5, toplimit: 38.5, downpossible: 33.5, toppossible: 40, unit: ºC, short: Temp.
