@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Aceso One</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="../css/swiper.min.css">
+    <link rel="stylesheet" href="../css/starEval.css">
+    <link rel="stylesheet" href="../css/util.css">
+    <link rel="stylesheet" href="../css/formAutoeval.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/custom.js"></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                           <a class="d-block" href="index.html" rel="home"><img class="d-block" src="../images/logo-highd-def-white.png" height="70px" alt="logo"></a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-items-center">
+                                <li><a href="index.html">Suivi</a></li>
+                                <li><a href="diagnostiques.html">Diagnostiques</a></li>
+                                <li class="current-menu-item"><a href="autoeval.html">Autoevaluation</a></li>
+                                <li><a href="">Contacter mon médecin</a></li>
+
+                                <li class="call-btn button gradient-bg mt-3 mt-md-0">
+                                    <a class="d-flex justify-content-center align-items-center" href="#"><img src="../images/emergency-call.png"> <p style="margin-top: 15px" id = "buttonPhone"></p></a>
+                                </li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+    
+	<div class="container-contact100" style="margin-top: 80px">
+		<button class="contact100-btn-show">
+			<i class="fa fa-envelope-o" aria-hidden="true"></i>
+		</button>
+
+		<div class="wrap-contact100">
+			<button class="contact100-btn-hide">
+				<i class="fa fa-close" aria-hidden="true"></i>
+			</button>
+
+			<form class="contact100-form validate-form">
+				<span class="contact100-form-title">
+					Autoevaluation 20-11-2019 21:50
+				</span>
+                <!-- add verification script -->
+                <div class="wrap-input100" style="padding-bottom: 140px">
+                    <div class="showcase">
+                      <div class="rating-system3">
+                      <h3 style="padding-bottom: 20px">How do you feel today?</h3>
+                      <input type="radio" name='rate3' id="star5_3" />
+                      <label for="star5_3"></label>
+
+                      <input type="radio" name='rate3' id="star4_3" />
+                      <label for="star4_3"></label>
+
+                      <input type="radio" name='rate3' id="star3_3" />
+                      <label for="star3_3"></label>
+
+                      <input type="radio" name='rate3' id="star2_3" />
+                      <label for="star2_3"></label>
+
+                      <input type="radio" name='rate3' id="star1_3" />
+                      <label for="star1_3"></label>
+
+                      <div class="text"></div>
+                      </div>
+                    </div> 
+                </div>
+
+				<div class="wrap-input100 validate-input" data-validate = "Message is required">
+					<span class="label-input100">Describe your pain today</span>
+					<textarea class="input100" name="message" placeholder="Please answer here..."></textarea>
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
+				</div>
+			</form>
+
+			<span class="contact100-more">
+				For any question contact our 24/7 call center: <span class="contact100-more-highlight">contactNumber</span>
+			</span>
+		</div>
+	</div>
+    
+    	<script src="../js/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../js/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../js/vendor/bootstrap/js/popper.js"></script>
+	<script src="../js/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../js/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="../js/vendor/daterangepicker/moment.min.js"></script>
+	<script src="../js/vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+	<script src="../js/vendor/countdowntime/countdowntime.js"></script>
+    <script type='text/javascript' src='../js/formAutoeval.js'></script>
+    <script type='text/javascript' src='../js/jquery.js'></script>
+    <script type='text/javascript' src='../js/jquery.collapsible.min.js'></script>
+    <script type='text/javascript' src='../js/swiper.js'></script>
+    <script type='text/javascript' src='../js/jquery.countdown.min.js'></script>
+    <script type='text/javascript' src='../js/circle-progress.min.js'></script>
+    <script type='text/javascript' src='../js/jquery.countTo.min.js'></script>
+    <script type='text/javascript' src='../js/jquery.barfiller.js'></script>
+    <script type='text/javascript' src='../js/custom.js'></script>
+</body>
+</html>
