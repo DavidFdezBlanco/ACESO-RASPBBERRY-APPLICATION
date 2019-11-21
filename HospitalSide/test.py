@@ -3,8 +3,24 @@ import paho.mqtt.publish as publish
 import time
 from time import gmtime, strftime
 import datetime
+from bigchaindb_driver import BigchainDB
+from bigchaindb_driver.crypto import generate_keypair
+import sys
+sys.path.insert(1, '../Backend')
+import crypto
 
 proffessionalID = "IDRASP1"
+bdb_root_url = 'https://test.ipdb.io/'
+
+############
+def getData(userdId, keyPath):
+    bdb = BigchainDB(bdb_root_url)
+    output = bdb.assets.get(search=userdId)
+    for block in output:
+        cypher = block["data"]["content"]
+        formattedCypher = bytes(str(cypher).split("'")[1],'utf-8')
+        data = crypto.decryptStr(formattedCypher,"../Backend/symKey")
+        print(data)
 
 ############
 def on_message(client, userdata, message):
@@ -16,10 +32,11 @@ def on_message(client, userdata, message):
 def sendOtherCompRealTime(client,userdata,message):
     bufferToSend = message
     publish.single(proffessionalID, bufferToSend, hostname="192.168.43.225", port = 8081)
-    
+
 ########################################
 broker_address="192.168.43.225"
 port = 8081
+
 
 print("--------------------------------------------")
 print("Creating new instance")
@@ -32,6 +49,7 @@ client.loop_start() #start the loop
 print("Subscribing to topic toServer")
 client.subscribe("IDRASP1")
 
+#getData("Johnny","symKey")
 
 
 time.sleep(10000) # wait

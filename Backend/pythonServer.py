@@ -38,7 +38,9 @@ def updateTxt():
     db = TinyDB("db.json") #init db
     if(len(db)>dbMaxSize): #if db is too big, send everything to the blockchain
         print("sending" + str(db.all()))
-        block = {'data': {'user': userdId, "content":str(db.all())},}
+        noow = strftime("%Y-%m-%d_%H:%M:%S", gmtime()) #get date
+        cypher = crypto.encryptStr(str(db.all()),"symKey") #encrypt data
+        block = {'data': {'user': userdId, 'timestamp':str(noow) ,'content':str(cypher)},}
         #To query: bdb.assets.get(search='Johnny')
         sendToBlockchain(block)
         open('db.json', 'w').close() #resets the local db
