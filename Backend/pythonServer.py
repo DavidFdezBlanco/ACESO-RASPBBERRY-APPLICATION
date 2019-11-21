@@ -12,6 +12,7 @@ import time, threading
 proffessionalID = "IDRASP1"
 userdId = "Johnny"
 dbMaxSize = 10
+bdb_root_url = 'https://test.ipdb.io/'
 
 ############
 def sendToBlockchain(input):
