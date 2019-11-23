@@ -1552,6 +1552,10 @@ ul.tabs-nav .tab-nav.active {
     width:64px;
 }
 
+.column {
+  float: right;
+}
+
 .foot-links ul {
     list-style: none;
     column-count: 2;
