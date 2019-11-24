@@ -38,7 +38,7 @@ def updateTxt():
     db = TinyDB("db.json") #init db
     if(len(db)>dbMaxSize): #if db is too big, send everything to the blockchain
         print("sending" + str(db.all()))
-        noow = strftime("%Y-%m-%d_%H:%M:%S", gmtime()) #get date
+        noow = strftime("%Y-%m-%d %H:%M:%S", gmtime()) #get date
         cypher = crypto.encryptStr(str(db.all()),"symKey") #encrypt data
         block = {'data': {'user': userdId, 'timestamp':str(noow) ,'content':str(cypher)},}
         #To query: bdb.assets.get(search='Johnny')
@@ -55,7 +55,7 @@ def updateTxt():
 ############
 def on_message(client, userdata, message):
     received = str(message.payload.decode("utf-8"))
-    noow = strftime("%Y-%m-%d_%H:%M:%S", gmtime())
+    noow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     print("-----> Message arrived : [" + message.topic + "] " + received + ","+str(noow))
     #IncludeInDB
     sendOtherCompRealTime(client, userdata, "[" + message.topic + "] " + received + ","+str(noow))

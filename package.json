@@ -19,5 +19,9 @@
   "devDependencies": {
     "electron": "^6.0.12",
     "sqlite3": "^4.1.0"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "jQuery": "^1.7.4"
   }
 }

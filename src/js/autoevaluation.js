@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 function readProfile(listOfMetrics)
 {
     text = readTextFile("../../Backend/userData.txt");
@@ -22,7 +24,7 @@ function readProfile(listOfMetrics)
 }
 
 function readAutoevalText(file){
-    text = readTextFile("../../Backend/autoevaluationData.txt");
+    text = readTextFile("../../Backend/receivedFiles/autoeval/autoevaluationData.txt");
     textByLanes = text.split("\n")
     window.listOfQuestions = []
     window.title = textByLanes[0].split(":")[1]
@@ -59,7 +61,7 @@ function createRepport(metric, swipWrap, swipCont)
     //Container contact
     containerContact100=document.createElement("div");
     containerContact100.className = 'container-contact100';
-    containerContact100.style.cssText='margin-top: 80px';
+    containerContact100.style.cssText='margin-top: 110px';
     
     //button
     buttonCon100 =document.createElement("button");
@@ -126,6 +128,7 @@ function createRepport(metric, swipWrap, swipCont)
     button.appendChild(spanText)
     submitButtonCont.appendChild(button)
     
+    startAnswer(title, listOfQuestions)
     
     //Final append
     contactFormCont.appendChild(contactFormTit)
@@ -138,8 +141,6 @@ function createRepport(metric, swipWrap, swipCont)
         if(lineSplitted[0]=="TextArea"){
             contactFormCont.append(createTextarea(index,lineSplitted[1]))
         }
-        
-        
     }
     contactFormCont.appendChild(submitButtonCont)
     wrapContact100.appendChild(contactFormCont)
@@ -148,6 +149,18 @@ function createRepport(metric, swipWrap, swipCont)
     body.insertBefore(containerContact100,body.childNodes[5])
     
     
+}
+function startAnswer(title, listOfQuestions)
+{
+    window.data = []
+    data.push("Title:"+title)
+    for (index in listOfQuestions)
+    {
+        if(index!=0){
+            data.push(listOfQuestions[index]+";Answer:")
+        }
+    }
+    //function to start the file data before the clicking into the submit button
 }
 function createMultichoice(numberOfMultichoices, question)
 {
@@ -176,7 +189,9 @@ function createMultichoice(numberOfMultichoices, question)
         radio.setAttribute("id","star"+String(i)+"_3_"+String(numberOfMultichoices))
         
         label = document.createElement("label")
-        label.setAttribute("for","star"+String(i).toString()+"_3_"+String(numberOfMultichoices))
+        label.setAttribute("for","star"+String(i)+"_3_"+String(numberOfMultichoices))
+        label.id ="star"+String(i)+"_3_"+String(numberOfMultichoices)
+        label.setAttribute("onclick", "chooseStar('"+i+"','"+String(numberOfMultichoices)+"')");
         ratingSystem3.append(radio)
         ratingSystem3.append(label)
     }
@@ -187,6 +202,33 @@ function createMultichoice(numberOfMultichoices, question)
     wrapInput.append(showcase)
     return wrapInput
 }
+function chooseStar(index, numChoic)
+{
+    var answerMultichoice
+    switch(String(index)) {
+      case '0':
+        answerMultichoice = "5/5"
+        break;
+      case '1':
+        answerMultichoice = "4/5"
+        break;
+      case '2':
+        answerMultichoice = "3/5"
+        break;
+      case '3':
+        answerMultichoice = "2/5"
+        break;
+      case '4':
+        answerMultichoice = "1/5"
+        break;
+      default:
+        answerMultichoice = "Not completed"
+        break;
+    }
+    newline = data[numChoic].split(";")
+    data[numChoic] = newline[0] + ";Answer:" + answerMultichoice
+}
+
 function createTextarea(numberTextArea, Question){
     
     valinput = document.createElement("div")
@@ -199,6 +241,7 @@ function createTextarea(numberTextArea, Question){
     
     textArea = document.createElement("textarea")
     textArea.className = "input100"
+    textArea.id ="message"+String(numberTextArea)
     textArea.setAttribute("name","message"+String(numberTextArea))
     textArea.setAttribute("placeholder", "Please answer here...")
     
@@ -209,6 +252,17 @@ function createTextarea(numberTextArea, Question){
     valinput.append(textArea)
     valinput.append(focusInput)
     return valinput
+}
+function getTextAreasContent()
+{
+    for (index in listOfQuestions)
+    {
+        lineSplitted = listOfQuestions[index].split(":")
+        if(lineSplitted[0]=="TextArea"){
+            newline = data[index].split(";")
+            data[index] = newline[0] + ";Answer:" + document.getElementById("message"+String(index)).value
+        }
+    }
 }
 function displayForm()
 {
@@ -222,11 +276,27 @@ function closeForm()
 }
 function submitFunction()
 {
-    console.log("submit")
+    getTextAreasContent()
+    var dataOutput
+    for (line in data)
+    {
+       dataOutput += data[line] + "\n"
+    }
+    var start = Date.now();
+    fs.writeFile("Backend/filesToSend/Autoeval/"+String(start)+".txt", dataOutput, (err) => {
+        if(err){
+            alert("An error ocurred creating the file "+ err.message)
+        }
+        else
+        {
+            alert("The file has been succesfully saved");
+        }
+    });
+    fs.unlinkSync("Backend/receivedFiles/autoeval/autoevaluationData.txt");
 }
 function fullfillReport()
 {
-      document.getElementById('buttonPhone').innerHTML = ContactPhone;
+    document.getElementById('buttonPhone').innerHTML = ContactPhone;
 }
 
 var listOfMetrics = [];
