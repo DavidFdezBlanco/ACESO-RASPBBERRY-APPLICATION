@@ -81,6 +81,8 @@ client.loop_start() #start the loop
 
 print("Subscribing to topic toServer")
 client.subscribe("Pulse")
+client.subscribe("Temperature")
+client.subscribe("Autoevaluation")
 
 db = TinyDB("db.json") #init db
 updateTxt()
