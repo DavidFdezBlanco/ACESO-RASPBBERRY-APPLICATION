@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import paho.mqtt.client as mqtt #import the client1
 import paho.mqtt.publish as publish
-import time
 from time import gmtime, strftime
 import datetime
 from tinydb import TinyDB, Query
@@ -41,8 +40,7 @@ def updateTxt():
         noow = strftime("%Y-%m-%d %H:%M:%S", gmtime()) #get date
         cypher = crypto.encryptStr(str(db.all()),"symKey") #encrypt data
         block = {'data': {'user': userdId, 'timestamp':str(noow) ,'content':str(cypher)},}
-        #To query: bdb.assets.get(search='Johnny')
-        sendToBlockchain(block)
+        sendToBlockchain(block) #To query: bdb.assets.get(search='Johnny')
         open('db.json', 'w').close() #resets the local db
     else:
         with open('data.txt', 'w') as f:
