@@ -35,7 +35,7 @@ def sendToBlockchain(input):
     print("A total of " + str(dbMaxSize) + " were sent to the blockchain")
 
 ############
-def updateTxt():
+def updateTxt(noow):
     db = TinyDB("db.json") #init db
     if(len(db)>dbMaxSize): #if db is too big, send everything to the blockchain
         print("sending" + str(db.all()))
@@ -49,8 +49,10 @@ def updateTxt():
             #Just for pulse for the moment
             data = db.search(Query()['topic']=="Pulse")
             for line in data:
-                f.write("[" + line['topic'] + "] " + line['value'] + ","+line['timestamp']+"\n")
-    threading.Timer(5, updateTxt).start() #Update the txt every 10 seconds
+               if(line['timestamp']>noow):
+                   f.write("[" + line['topic'] + "] " + line['value'] + ","+line['timestamp']+"\n")
+    noow = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    threading.Timer(5, updateTxt, [noow]).start() #Update the txt every 10 seconds
 
 ############
 def on_message(client, userdata, message):
@@ -85,7 +87,7 @@ client.subscribe("Temperature")
 client.subscribe("Autoevaluation")
 
 db = TinyDB("db.json") #init db
-updateTxt()
+updateTxt(noow)
 
 
 time.sleep(100000) # wait
