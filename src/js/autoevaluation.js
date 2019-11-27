@@ -280,7 +280,9 @@ function submitFunction()
     var dataOutput
     for (line in data)
     {
-       dataOutput += data[line] + "\n"
+        if(data[line]!="undefined"){
+            dataOutput += data[line] + "\n"
+        }
     }
     var start = Date.now();
     fs.writeFile("Backend/filesToSend/Autoeval/"+String(start)+".txt", dataOutput, (err) => {
