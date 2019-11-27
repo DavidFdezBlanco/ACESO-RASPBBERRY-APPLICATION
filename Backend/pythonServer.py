@@ -87,6 +87,7 @@ client.subscribe("Temperature")
 client.subscribe("Autoevaluation")
 
 db = TinyDB("db.json") #init db
+noow = strftime("%Y-%m-%d %H:%M:%S", gmtime()) #get date
 updateTxt(noow)
 
 
