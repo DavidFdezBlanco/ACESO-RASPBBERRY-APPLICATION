@@ -6,6 +6,8 @@ import datetime
 from tinydb import TinyDB, Query
 import crypto
 import time, threading
+from bigchaindb_driver import BigchainDB
+from bigchaindb_driver.crypto import generate_keypair
 
 
 proffessionalID = "IDRASP1"
@@ -43,12 +45,12 @@ def updateTxt():
         sendToBlockchain(block) #To query: bdb.assets.get(search='Johnny')
         open('db.json', 'w').close() #resets the local db
     else:
-        with open('data.txt', 'w') as f:
+        with open('data.txt', 'a+') as f:
             #Just for pulse for the moment
-            data = db.search(Query()['topic']=="pulse")
-            for key, value, timestamp in data:
-                f.write("[" + key + "] " + value + ","+timestamp+"\n")
-    threading.Timer(10, updateTxt).start() #Update the txt every 10 seconds
+            data = db.search(Query()['topic']=="Pulse")
+            for line in data:
+                f.write("[" + line['topic'] + "] " + line['value'] + ","+line['timestamp']+"\n")
+    threading.Timer(5, updateTxt).start() #Update the txt every 10 seconds
 
 ############
 def on_message(client, userdata, message):
@@ -86,7 +88,7 @@ db = TinyDB("db.json") #init db
 updateTxt()
 
 
-time.sleep(10000000000000000) # wait
+time.sleep(100000) # wait
 client.loop_stop() #stop the loop
 
 #To connect the mosquitto server use the command mosquitto -p 8081
