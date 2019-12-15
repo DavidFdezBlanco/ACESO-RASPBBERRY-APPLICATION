@@ -8,6 +8,7 @@ from bigchaindb_driver.crypto import generate_keypair
 import sys
 sys.path.insert(1, '../Backend')
 import crypto
+import zlib
 
 proffessionalID = "IDRASP1"
 bdb_root_url = 'https://test.ipdb.io/'
@@ -19,6 +20,7 @@ def getData(userdId, keyPath):
     for block in output:
         cypher = block["data"]["content"]
         formattedCypher = bytes(str(cypher).split("'")[1],'utf-8')
+        formattedCypher = zlib.decompress(formattedCypher)
         data = crypto.decryptStr(formattedCypher,"../Backend/symKey")
         print(data)
 
