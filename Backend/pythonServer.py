@@ -8,7 +8,7 @@ import crypto
 import time, threading
 from bigchaindb_driver import BigchainDB
 from bigchaindb_driver.crypto import generate_keypair
-
+import zlib
 
 proffessionalID = "IDRASP1"
 userdId = "Johnny"
@@ -40,8 +40,15 @@ def updateTxt(noow):
     if(len(db)>dbMaxSize): #if db is too big, send everything to the blockchain
         print("sending" + str(db.all()))
         noow = strftime("%Y-%m-%d %H:%M:%S", gmtime()) #get date
+
+        #Encryption
         cypher = crypto.encryptStr(str(db.all()),"symKey") #encrypt data
-        block = {'data': {'user': userdId, 'timestamp':str(noow) ,'content':str(cypher)},}
+
+        #Compression
+        compressed_file = zlib.compress(cypher,4)
+
+        #Create final block
+        block = {'data': {'user': userdId, 'timestamp':str(noow) ,'content':str(compressed_file)},}
         sendToBlockchain(block) #To query: bdb.assets.get(search='Johnny')
         open('db.json', 'w').close() #resets the local db
     else:
