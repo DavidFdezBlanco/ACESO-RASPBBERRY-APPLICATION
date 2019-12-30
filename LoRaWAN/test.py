@@ -21,4 +21,3 @@ for i in range(0, 5):
     D.send("Hello World")
     print("Sent message")
     sleep(1)
-
