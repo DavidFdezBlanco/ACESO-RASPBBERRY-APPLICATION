@@ -46,9 +46,10 @@ def send_file_retransmission_static_size(file): #modify according to protocl
     fragmented_file = fragment(SF, file)
     i = 1
     for block in fragmented_file:
-        D.send(block)
+        D.send(str(block))
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
+        sleep(1)
 
 def send_file_redondance_static_size(file, numberOfRetrans): #send file 
     SF = 7
@@ -56,8 +57,9 @@ def send_file_redondance_static_size(file, numberOfRetrans): #send file
     i = 1
     for block in fragmented_file:
         for x in range(numberOfRetrans):
-            D.send(block)
+            D.send(str(block))
             print("retransmission " + str(x) + "/" + str(numberOfRetrans))
+            sleep(0.5)
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
     
@@ -84,6 +86,7 @@ while not D.registered():
     print("Waiting")
     sleep(2)
 sleep(10)
+
 send_file_historique_static_size("large.txt",3)
 
 #send_file(7,"large.txt")
