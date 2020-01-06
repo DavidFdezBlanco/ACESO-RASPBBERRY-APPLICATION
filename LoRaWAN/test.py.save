@@ -7,7 +7,7 @@ from time import sleep
 import RPi.GPIO as GPIO
 from dragino import Dragino
 
-max_size = 200  #max bytes size supported by lorawan protocol. 2 bytes from i
+max_size = 243 - 2  #max bytes size supported by lorawan protocol. 2 bytes from i
 min_size = 10  #kinda arbitrary
 
 
@@ -38,9 +38,6 @@ def fragment(SF, file):
             output.append(data)
         return output
 
-def utf8len(s):
-    return len(s.encode('utf-8'))
-
 def send_file_retransmission_static_size(file): #modify according to protocl
     SF = 7
     fragmented_file = fragment(SF, file)
@@ -70,9 +67,8 @@ def send_file_historique_static_size(file, historiqueWindow):
         sending[1:historiqueWindow] = sending[0:historiqueWindow-1]
         sending[0] = block
         for x in range(historiqueWindow):
-            if ((str(None) in str(sending[x])) == False):
-                D.send(str(sending[x]))
-                sleep(1)
+            
+		D.send(str(sending[x]))
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
         
@@ -84,7 +80,8 @@ while not D.registered():
     print("Waiting")
     sleep(2)
 sleep(10)
-send_file_historique_static_size("large.txt",3)
+
+send_file_historique_static_size("large.txt",5)
 
 #send_file(7,"large.txt")
 
