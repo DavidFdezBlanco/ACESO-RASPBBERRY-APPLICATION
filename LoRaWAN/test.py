@@ -33,7 +33,7 @@ def fragment(SF, file):
     packetID = 1
     with open(file,'rb') as ifile:
         while True:
-            prefix = "[IDPCK:" + str(packetID) + "]"
+            prefix = "[IDPCK:" + str(packetID) + "]!"
             prefix_as_bytes = str.encode(prefix)
             data = ifile.read(chunk_size)
             if data.decode() == "":
