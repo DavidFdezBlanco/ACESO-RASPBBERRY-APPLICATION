@@ -30,12 +30,16 @@ def fragment(SF, file):
 
     print("Chunk size is " + str(chunk_size))
     output = []  #The fragmented file
+    packetID = 1
     with open(file,'rb') as ifile:
         while True:
+            prefix = "[IDPCK:" + str(packetID) + "]"
+            prefix_as_bytes = str.encode(prefix)
             data = ifile.read(chunk_size)
             if data.decode() == "":
                     break
-            output.append(data)
+            output.append(prefix_as_bytes + data)
+            packetID = packetID + 1
         return output
 
 def utf8len(s):
