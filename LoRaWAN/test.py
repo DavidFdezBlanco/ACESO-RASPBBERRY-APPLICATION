@@ -46,8 +46,22 @@ def send_file(SF, file): #modify according to protocl
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
 
-
-
+def send_file_retransmit_static_size(file, numberOfRetrans): #send file 
+    SF = 7
+    fragmented_file = fragment(SF, file)
+    i = 1
+    for block in fragmented_file:
+        for x in range(numberOfRetrans):
+            D.send(block)
+            print("retransmission " + str(x) + "/" + str(numberOfRetrans))
+        print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
+        i+=1
+    
+def send_file_historique_static_size(file, historiqueWindow):
+    SF = 7
+    fragmented_file = fragment(SF, file)
+    #finish that
+    
 GPIO.setwarnings(False)
 
 D = Dragino("dragino.ini", logging_level=logging.DEBUG)
