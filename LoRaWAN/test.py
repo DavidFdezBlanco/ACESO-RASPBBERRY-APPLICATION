@@ -87,7 +87,8 @@ while not D.registered():
     sleep(2)
 sleep(10)
 
-send_file_historique_static_size("large.txt",3)
+send_file_redondance_static_size("large.txt",2)
+#send_file_historique_static_size("large.txt",3)
 
 #send_file(7,"large.txt")
 
