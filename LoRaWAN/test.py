@@ -38,7 +38,8 @@ def fragment(SF, file):
             data = ifile.read(chunk_size)
             if data.decode() == "":
                     break
-            output.append(prefix_as_bytes + data)
+            result = prefix_as_bytes + data
+            output.append(result)
             packetID = packetID + 1
         return output
 
