@@ -196,6 +196,7 @@ class Dragino(LoRa):
         """
             Send a list of bytes over the LoRaWAN channel
         """
+        
         attempt = 0
         if self.network_key is None or self.apps_key is None: # either using ABP / join has  run
             raise DraginoError("No network and/or apps key")
@@ -217,6 +218,7 @@ class Dragino(LoRa):
                 self.set_mode(MODE.TX)
                 self.logger.info(
                     "Succeeded on attempt %d/%d", attempt, self.lora_retries)
+                self.logger.info(LoRa.str())
                 return
             except ValueError as err:
                 self.logger.error(str(err))
@@ -231,7 +233,7 @@ class Dragino(LoRa):
             Send a string over the channel
         """
         self.send_bytes(list(map(ord, str(message))))
-
+    
     def get_gps(self):
         """
             Get the GPS position from the dragino,
