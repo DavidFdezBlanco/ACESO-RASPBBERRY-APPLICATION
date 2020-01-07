@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 from dragino import Dragino
 
 max_size = 200  #max bytes size supported by lorawan protocol. 2 bytes from i
-min_size = 10  #kinda arbitrary
+min_size = 40  #kinda arbitrary
 
 
 #returns an array of blocks
@@ -18,13 +18,13 @@ def fragment(SF, file):
     if(SF == 7):
         chunk_size = max_size
     elif(SF == 8):
-        chunk_size = min_size + int((max_size-min_size)/5) * 4
+        chunk_size = max_size
     elif(SF == 9):
-        chunk_size = min_size + int((max_size-min_size)/5) * 3
+        chunk_size = 123-30
     elif(SF == 10):
-        chunk_size = min_size + int((max_size-min_size)/5) * 2
+        chunk_size = min_size
     elif(SF == 11):
-        chunk_size = min_size + int((max_size-min_size)/5) * 1
+        chunk_size = min_size
     else:
         chunk_size = min_size
 
@@ -70,7 +70,7 @@ def send_file_redondance_static_size(file, numberOfRetrans, SF): #send file
         for x in range(numberOfRetrans):
             D.send(str(block))
             print("retransmission " + str(x) + "/" + str(numberOfRetrans))
-            sleep(0.5)
+            sleep(0.3)
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
     
@@ -84,7 +84,7 @@ def send_file_historique_static_size(file, historiqueWindow, SF):
         for x in range(historiqueWindow):
             if ((str(None) in str(sending[x])) == False):
                 D.send(str(sending[x]))
-                sleep(0.5)
+                sleep(0.3)
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
         
@@ -94,7 +94,7 @@ GPIO.setwarnings(False)
 #send_file_historique_static_size("large.txt",10)
 #send_file(7,"large.txt")
 
-D = Dragino("configs/dragino"+str(i+7)+".ini", logging_level=logging.WARN)
+D = Dragino("configs/dragino"+str(7)+".ini", logging_level=logging.WARN)
 D.join()
 while not D.registered():
     print("Waiting")
@@ -106,7 +106,7 @@ sleep(1)
     
 SF = getRealSF(optimalIndex)
 print("Sarting with SF" + str(SF))
-D = Dragino("configs/dragino"+str(SF)+".ini", logging_level=logging.DEBUG)
+D = Dragino("configs/dragino"+str(SF)+".ini", logging_level=logging.WARN)
 D.join()
 while not D.registered():
     print("Waiting")

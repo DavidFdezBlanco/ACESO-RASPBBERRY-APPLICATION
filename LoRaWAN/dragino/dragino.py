@@ -31,7 +31,7 @@ from .LoRaWAN.MHDR import MHDR
 from .FrequncyPlan import LORA_FREQS
 
 DEFAULT_LOG_LEVEL = logging.WARN #Change after finishing development
-DEFAULT_RETRIES = 3 # How many attempts to send the message
+DEFAULT_RETRIES = 1 # How many attempts to send the message
 
 AUTH_ABP = "ABP"
 AUTH_OTTA = "OTTA"
@@ -131,23 +131,22 @@ class Dragino(LoRa):
             Callback on RX complete, signalled by I/O
         """
         self.logger.debug("Recieved message")
-        self.clear_irq_flags(RxDone=1)
-        payload = self.read_payload(nocheck=True)
-        lorawan = lorawan_msg([], self.appkey)
-        lorawan.read(payload)
-        lorawan.get_payload()
-#        print(lorawan.get_mhdr().get_mversion())
-        if lorawan.get_mhdr().get_mtype() == MHDR.JOIN_ACCEPT:
-            self.logger.debug("Join resp")
-            #It's a response to a join request
-            lorawan.valid_mic()
-            self.device_addr = lorawan.get_devaddr()
-            self.logger.info("Device: %s", self.device_addr)
-            self.network_key = lorawan.derive_nwskey(self.devnonce)
-            self.logger.info("Network key: %s", self.network_key)
-            self.apps_key = lorawan.derive_appskey(self.devnonce)
-            self.logger.info("APPS key: %s", self.apps_key)
-
+#        self.clear_irq_flags(RxDone=1)
+#        payload = self.read_payload(nocheck=True)
+#        lorawan = lorawan_msg([], self.appkey)
+#        lorawan.read(payload)
+#        lorawan.get_payload()
+##        print(lorawan.get_mhdr().get_mversion())
+#        if lorawan.get_mhdr().get_mtype() == MHDR.JOIN_ACCEPT:
+#            self.logger.debug("Join resp")
+#            #It's a response to a join request
+#            lorawan.valid_mic()
+#            self.device_addr = lorawan.get_devaddr()
+#            self.logger.info("Device: %s", self.device_addr)
+#            self.network_key = lorawan.derive_nwskey(self.devnonce)
+#            self.logger.info("Network key: %s", self.network_key)
+#            self.apps_key = lorawan.derive_appskey(self.devnonce)
+#            self.logger.info("APPS key: %s", self.apps_key)
     def on_tx_done(self):
         """
             Callback on TX complete is signaled using I/O

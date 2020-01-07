@@ -14,7 +14,8 @@ class PhyPayload:
 
     def read(self, packet):
         if len(packet) < 12:
-            raise MalformedPacketException("Invalid lorawan packet");
+            if len(packet) != 0:
+                raise MalformedPacketException("Invalid lorawan packet");
 
         self.mhdr = MHDR(packet[0])
         self.set_direction()
