@@ -85,18 +85,30 @@ def send_file_historique_static_size(file, historiqueWindow):
         
 GPIO.setwarnings(False)
 
-D = Dragino("dragino.ini", logging_level=logging.DEBUG)
-D.join()
-while not D.registered():
-    print("Waiting")
-    sleep(2)
-sleep(10)
 #send_file_redondance_static_size("large.txt",3)
 #send_file_historique_static_size("large.txt",10)
 
 #send_file(7,"large.txt")
 
-for i in range(0, 5):
-    SNR = D.send_connection_test("Hello World")
-    print("SNR RECUPERADO " + str(SNR))
+listSFQuality = [None]*6
+
+for index in range(0,6):
+    D = Dragino("configs/dragino"+(i+7)+".ini", logging_level=logging.DEBUG)
+    D.join()
+    while not D.registered():
+        print("Waiting")
+        sleep(2)
+    sleep(2)
+    listSFQuality[i] = D.send_connection_test("testing connection")
+    print(str(listSFQuality[i]))
     sleep(1)
+
+
+
+
+#D = Dragino("dragino.ini", logging_level=logging.DEBUG)
+#D.join()
+#while not D.registered():
+#    print("Waiting")
+#    sleep(2)
+#sleep(10)
