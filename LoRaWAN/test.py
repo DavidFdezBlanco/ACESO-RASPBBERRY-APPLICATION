@@ -46,6 +46,14 @@ def fragment(SF, file):
 def utf8len(s):
     return len(s.encode('utf-8'))
 
+def getRealSF(s):
+    if(s == 3):	
+        return 12
+    if(s == 4):
+        return 10
+    if(s == 5):
+        return 7
+
 def send_file_retransmission_static_size(file): #modify according to protocl
     SF = 7
     fragmented_file = fragment(SF, file)
@@ -90,19 +98,19 @@ GPIO.setwarnings(False)
 
 #send_file(7,"large.txt")
 
-listSFQuality = [None]*6
-
-for index in range(0,6):
-    D = Dragino("configs/dragino"+(i+7)+".ini", logging_level=logging.DEBUG)
-    D.join()
-    while not D.registered():
-        print("Waiting")
-        sleep(2)
+D = Dragino("configs/dragino"+str(i+7)+".ini", logging_level=logging.DEBUG)
+D.join()
+while not D.registered():
+    print("Waiting")
     sleep(2)
-    listSFQuality[i] = D.send_connection_test("testing connection")
-    print(str(listSFQuality[i]))
-    sleep(1)
+sleep(2)
+optimalIndex = D.send_connection_test("testing connection")
 
+print(str(listSFQuality[i]))
+
+GPIO.cleanup()
+sleep(1)
+    
 
 
 

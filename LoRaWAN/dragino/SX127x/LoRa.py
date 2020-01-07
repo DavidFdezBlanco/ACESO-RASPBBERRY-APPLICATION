@@ -237,7 +237,8 @@ class LoRa(object):
 
     def test_sf(self, payload):
         self.write_payload(payload)
-        return self.get_pkt_snr_value()
+        bestSF = self.get_detect_optimize()
+        return bestSF
     
     def reset_ptr_rx(self):
         """ Get FIFO ready for RX: Set FifoAddrPtr to FifoRxBaseAddr. The transceiver is put into STDBY mode. """
