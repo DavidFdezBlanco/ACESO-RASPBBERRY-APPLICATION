@@ -54,8 +54,7 @@ def getRealSF(s):
     if(s == 5):
         return 7
 
-def send_file_retransmission_static_size(file): #modify according to protocl
-    SF = 7
+def send_file_retransmission_static_size(file, SF): #modify according to protocl
     fragmented_file = fragment(SF, file)
     i = 1
     for block in fragmented_file:
@@ -64,8 +63,7 @@ def send_file_retransmission_static_size(file): #modify according to protocl
         i+=1
         sleep(1)
 
-def send_file_redondance_static_size(file, numberOfRetrans): #send file 
-    SF = 7
+def send_file_redondance_static_size(file, numberOfRetrans, SF): #send file
     fragmented_file = fragment(SF, file)
     i = 1
     for block in fragmented_file:
@@ -76,8 +74,7 @@ def send_file_redondance_static_size(file, numberOfRetrans): #send file
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
     
-def send_file_historique_static_size(file, historiqueWindow):
-    SF = 7
+def send_file_historique_static_size(file, historiqueWindow, SF):
     fragmented_file = fragment(SF, file)
     i = 1
     sending = [None]*historiqueWindow
@@ -93,30 +90,27 @@ def send_file_historique_static_size(file, historiqueWindow):
         
 GPIO.setwarnings(False)
 
-#send_file_redondance_static_size("large.txt",3)
-#send_file_historique_static_size("large.txt",10)
 
+#send_file_historique_static_size("large.txt",10)
 #send_file(7,"large.txt")
 
-D = Dragino("configs/dragino"+str(i+7)+".ini", logging_level=logging.DEBUG)
+D = Dragino("configs/dragino"+str(i+7)+".ini", logging_level=logging.WARN)
 D.join()
 while not D.registered():
     print("Waiting")
     sleep(2)
 sleep(2)
 optimalIndex = D.send_connection_test("testing connection")
-
-print(str(listSFQuality[i]))
-
 GPIO.cleanup()
 sleep(1)
     
+SF = getRealSF(optimalIndex)
+print("Sarting with SF" + str(SF))
+D = Dragino("configs/dragino"+str(SF)+".ini", logging_level=logging.DEBUG)
+D.join()
+while not D.registered():
+    print("Waiting")
+    sleep(2)
+sleep(2)
 
-
-
-#D = Dragino("dragino.ini", logging_level=logging.DEBUG)
-#D.join()
-#while not D.registered():
-#    print("Waiting")
-#    sleep(2)
-#sleep(10)
+send_file_redondance_static_size("large.txt",3, SF)
