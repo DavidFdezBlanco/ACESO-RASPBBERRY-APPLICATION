@@ -79,7 +79,7 @@ def send_file_historique_static_size(file, historiqueWindow):
         for x in range(historiqueWindow):
             if ((str(None) in str(sending[x])) == False):
                 D.send(str(sending[x]))
-                sleep(1)
+                sleep(0.5)
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
         
@@ -91,13 +91,12 @@ while not D.registered():
     print("Waiting")
     sleep(2)
 sleep(10)
-
-send_file_redondance_static_size("large.txt",2)
-#send_file_historique_static_size("large.txt",3)
+#send_file_redondance_static_size("large.txt",3)
+#send_file_historique_static_size("large.txt",10)
 
 #send_file(7,"large.txt")
 
-#for i in range(0, 5):
-#    D.send("Hello World")
-#    print("Sent message")
-#    sleep(1)
+for i in range(0, 5):
+    SNR = D.send_connection_test("Hello World")
+    print("SNR RECUPERADO " + str(SNR))
+    sleep(1)

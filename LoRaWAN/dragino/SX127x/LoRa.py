@@ -221,7 +221,7 @@ class LoRa(object):
             sys.stderr.write("Mode <- %s\n" % MODE.lookup[mode])
         self.mode = mode
         return self.spi.xfer([REG.LORA.OP_MODE | 0x80, mode])[1]
-
+    
     def write_payload(self, payload):
         """ Get FIFO ready for TX: Set FifoAddrPtr to FifoTxBaseAddr. The transceiver is put into STDBY mode.
         :param payload: Payload to write (list)
@@ -229,12 +229,16 @@ class LoRa(object):
         """
         payload_size = len(payload)
         self.set_payload_length(payload_size)
-        
+        #print("SNR Value:" + str(self.get_pkt_snr_value()))
         self.set_mode(MODE.STDBY)
         base_addr = self.get_fifo_tx_base_addr()
         self.set_fifo_addr_ptr(base_addr)
         return self.spi.xfer([REG.LORA.FIFO | 0x80] + payload)[1:]
 
+    def test_sf(self, payload):
+        self.write_payload(payload)
+        return self.get_pkt_snr_value()
+    
     def reset_ptr_rx(self):
         """ Get FIFO ready for RX: Set FifoAddrPtr to FifoRxBaseAddr. The transceiver is put into STDBY mode. """
         self.set_mode(MODE.STDBY)

@@ -192,6 +192,37 @@ class Dragino(LoRa):
         """
         return self.device_addr is not None
 
+    def test_sf_sending(self,message):
+        attempt = 0
+        if self.network_key is None or self.apps_key is None: # either using ABP / join has  run
+            raise DraginoError("No network and/or apps key")
+        while attempt <= self.lora_retries: # try a couple of times because of
+            attempt += 1 #  intermittent malformed packets nasty hack
+            try: #shouldn't be needed
+                lorawan = lorawan_msg(self.network_key, self.apps_key)
+                lorawan.create(
+                    MHDR.UNCONF_DATA_UP,
+                    {'devaddr': self.device_addr,
+                     'fcnt': self.frame_count,
+                     'data': message})
+                self.logger.debug("Frame count %d", self.frame_count)
+                self.frame_count += 1
+                self._save_frame_count()
+                snr = self.test_sf(lorawan.to_raw())
+                self.logger.debug("Packet = %s", lorawan.to_raw())
+                self.set_dio_mapping([1, 0, 0, 0, 0, 0])
+                self.set_mode(MODE.TX)
+                self.logger.info(
+                    "Succeeded on attempt %d/%d", attempt, self.lora_retries)
+                return snr
+            except ValueError as err:
+                self.logger.error(str(err))
+                raise DraginoError(str(err)) from None
+            except MalformedPacketException as exp:
+                self.logger.error(exp)
+            except KeyError as err:
+                self.logger.error(err)
+
     def send_bytes(self, message):
         """
             Send a list of bytes over the LoRaWAN channel
@@ -226,6 +257,12 @@ class Dragino(LoRa):
                 self.logger.error(exp)
             except KeyError as err:
                 self.logger.error(err)
+
+    def send_connection_test(self, message):
+        """
+            Send a string over the channel
+        """
+        return self.test_sf_sending(list(map(ord, str(message))))
 
     def send(self, message):
         """
