@@ -5,7 +5,7 @@
 import logging
 from time import sleep
 import RPi.GPIO as GPIO
-from libs/dragino import Dragino
+from libs.dragino import Dragino
 
 max_size = 200  #max bytes size supported by lorawan protocol. 2 bytes from i
 min_size = 40  #kinda arbitrary
@@ -113,5 +113,5 @@ while not D.registered():
     sleep(2)
 sleep(2)
 
-send_file_redondance_static_size("large.txt",3, SF)
+send_file_redondance_static_size("libs/large.txt",3, SF)
 
