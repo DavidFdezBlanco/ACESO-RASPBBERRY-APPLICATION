@@ -10,6 +10,7 @@ from libs.dragino import Dragino
 max_size = 200  #max bytes size supported by lorawan protocol. 2 bytes from i
 min_size = 40  #kinda arbitrary
 
+realTimeBatch = [None] * 800
 
 #returns an array of blocks
 def fragment(SF, file):
@@ -31,9 +32,10 @@ def fragment(SF, file):
     print("Chunk size is " + str(chunk_size))
     output = []  #The fragmented file
     packetID = 1
+    hash = hash(datetime.now())
     with open(file,'rb') as ifile:
         while True:
-            prefix = "[IDPCK:" + str(packetID) + "]!"
+            prefix = "[IDPCK:" + str(packetID) + "]" + "[" + hash + "]!"
             prefix_as_bytes = str.encode(prefix)
             data = ifile.read(chunk_size)
             if data.decode() == "":
@@ -69,7 +71,7 @@ def send_file_redondance_static_size(file, numberOfRetrans, SF): #send file
     for block in fragmented_file:
         for x in range(numberOfRetrans):
             D.send(str(block))
-            print("retransmission " + str(x) + "/" + str(numberOfRetrans))
+#            print("retransmission " + str(x) + "/" + str(numberOfRetrans))
             sleep(0.3)
         print("block " + str(i) + "/" + str(len(fragmented_file)) + " has been sent")
         i+=1
@@ -90,28 +92,46 @@ def send_file_historique_static_size(file, historiqueWindow, SF):
         
 GPIO.setwarnings(False)
 
-
-#send_file_historique_static_size("large.txt",10)
-#send_file(7,"large.txt")
-
-D = Dragino("configs/dragino"+str(7)+".ini", logging_level=logging.WARN)
-D.join()
-while not D.registered():
-    print("Waiting")
-    sleep(2)
-sleep(2)
-optimalIndex = D.send_connection_test("testing connection")
-GPIO.cleanup()
-sleep(1)
+def consumeRealTimeBatch(D):
+    for trace in realTimeBatch:
+        if ((str(None) in str(trace) == False):
+            D.send(str(trace))
+            trace = None
     
-SF = getRealSF(optimalIndex)
-print("Sarting with SF" + str(SF))
-D = Dragino("configs/dragino"+str(SF)+".ini", logging_level=logging.WARN)
-D.join()
-while not D.registered():
-    print("Waiting")
+    
+def getOptimalChannelSF():
+    D = Dragino("configs/dragino"+str(7)+".ini", logging_level=logging.WARN)
+    D.join()
+    while not D.registered():
+        print("Waiting")
+        sleep(2)
     sleep(2)
-sleep(2)
+    optimalIndex = D.send_connection_test("testing connection")
+    GPIO.cleanup()
+    sleep(1)
+    return getRealSF(optimalIndex)
 
-send_file_redondance_static_size("libs/large.txt",3, SF)
+def stablish_session():
+    SF = getOptimalChannelSF():
+    print("Restarting channel with sf" + str(SF))
+    D = Dragino("configs/dragino"+str(SF)+".ini", logging_level=logging.INFO)
+    D.join()
+    
+    while not D.registered():
+        print("Waiting")
+        sleep(2)
+    sleep(2)
+    
+    numberOfSends = 0
+    while numberOfSends < 20:
+        numberOfSends += 1
+        #consumeRealTimeBatch(D)
+        if (numberOfSends == 20):
+            send_file_redondance_static_size("libs/large.txt",3, SF)
+        sleep(0.3)
+    GPIO.cleanup()
 
+    
+
+
+stablish_session():
