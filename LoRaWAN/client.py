@@ -12,7 +12,7 @@ from bigchaindb_driver.crypto import generate_keypair
 filename_REAL_TIME = "receivedFiles/realtime.txt"
 REALTIME_file = [None]*1000 #500 dernières traces sur le REALTIME
 LARGE_file = [None]*1000
-userdId = "Johnny"
+userdId = "Hospital"
 bdb_root_url = 'https://test.ipdb.io/'
 
 def sendToBlockchain(input):
@@ -54,7 +54,9 @@ def writeLong(longname, list):
                 line= line.replace('\\','')
                 s += str(line)
                 f.write(line)
-    sendToBlockchain(s)
+    if(s != ""):
+        block = {'data': {'user': userdId,'content':s},}
+        sendToBlockchain(block)
             
 def cleanRealTime():
     f = open(filename_REAL_TIME, "r")
@@ -113,7 +115,8 @@ def storeTrace(store):
 def uplink_callback(msg, client):
     #print("Received uplink from ", msg.dev_id)
     storeTrace(msg)
-    
+ 
+ 
 
 # Connect to MQTT
 broker_address="eu.thethings.network"
