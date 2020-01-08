@@ -48,6 +48,8 @@ def fragment(SF, file):
             prefix_as_bytes = str.encode(prefix)
             data = ifile.read(chunk_size)
             if data.decode() == "":
+                    result = prefix_as_bytes + str.encode("[END]")
+                    output.append(result)
                     break
             result = prefix_as_bytes + data
             output.append(result)
