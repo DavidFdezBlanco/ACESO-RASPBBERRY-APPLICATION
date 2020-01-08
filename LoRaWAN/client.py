@@ -5,11 +5,30 @@ import datetime
 import ttn
 import re
 import os
+from bigchaindb_driver import BigchainDB
+from bigchaindb_driver.crypto import generate_keypair
 
 
 filename_REAL_TIME = "receivedFiles/realtime.txt"
 REALTIME_file = [None]*1000 #500 dernières traces sur le REALTIME
 LARGE_file = [None]*1000
+userdId = "Johnny"
+bdb_root_url = 'https://test.ipdb.io/'
+
+def sendToBlockchain(input):
+    bdb = BigchainDB(bdb_root_url) #init bigchainDb
+    user = generate_keypair()
+
+    prepared_creation_tx = bdb.transactions.prepare(
+        operation='CREATE',
+        signers=user.public_key,
+        asset=input
+    )
+    fulfilled_creation_tx = bdb.transactions.fulfill(
+        prepared_creation_tx, private_keys=user.private_key)
+    bdb.transactions.send_commit(fulfilled_creation_tx)
+
+    print("Sent to the blockchain")
 
 def isFull():
     for line in REALTIME_file:
@@ -28,11 +47,14 @@ def writeOutput():
 def writeLong(longname, list):
     os.remove("receivedFiles/"+longname+"_toTreat.txt")
     f = open("receivedFiles/"+longname+".txt", "a")
+    s = ""
     for line in list:
         if ((str(None) in str(line)) == False):
             if (("END" in str(line)) == False):
                 line= line.replace('\\','')
+                s += str(line)
                 f.write(line)
+    sendToBlockchain(s)
             
 def cleanRealTime():
     f = open(filename_REAL_TIME, "r")
