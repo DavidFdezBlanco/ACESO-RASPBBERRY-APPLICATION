@@ -2,7 +2,9 @@ const fs = require('fs')
 
 function readProfile(listOfMetrics)
 {
-    text = readTextFile("../../Backend/userData.txt");
+    console.log("Here")
+    text = readTextFile("../../Backend/receivedFiles/UserData/userData.txt");
+    console.log(text)
     textByLanes = text.split("\n")
     window.UserID = textByLanes[0].split(":")[1]
     window.UserName = textByLanes[1].split(":")[1]
@@ -24,7 +26,7 @@ function readProfile(listOfMetrics)
 }
 
 function readAutoevalText(file){
-    text = readTextFile("../../Backend/receivedFiles/autoeval/autoevaluationData.txt");
+    text = readTextFile("../../Backend/receivedFiles/Autoeval/autoevaluationData.txt");
     textByLanes = text.split("\n")
     window.listOfQuestions = []
     window.title = textByLanes[0].split(":")[1]
@@ -303,8 +305,9 @@ function fullfillReport()
 
 var listOfMetrics = [];
 readProfile(listOfMetrics);
+fullfillReport();
 
 readAutoevalText()
 createRepport();
-fullfillReport();
+
 

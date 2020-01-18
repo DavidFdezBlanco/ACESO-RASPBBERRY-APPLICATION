@@ -4678,7 +4678,7 @@ var Pagination = {
     var paginationHTML = '';
     if (params.type === 'bullets') {
       var numberOfBullets = swiper.params.loop ? Math.ceil((slidesLength - (swiper.loopedSlides * 2)) / swiper.params.slidesPerGroup) : swiper.snapGrid.length;
-      text = readTextFile("../../Backend/userData.txt");
+      text = readTextFile("../../Backend/receivedFiles/UserData/userData.txt");
     textByLanes = text.split("\n")
     window.UserID = textByLanes[0].split(":")[1]
     window.UserName = textByLanes[1].split(":")[1]

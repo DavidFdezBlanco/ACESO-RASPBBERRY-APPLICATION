@@ -1,0 +1,6 @@
+Title:Autoevaluation 23 november 2019
+Multi:How do you feel today?
+Multi: Nausea degree
+TextArea: Describe your pain
+Multi: Rate your pain from 1 to 5
+TextArea: Don't know, just testing

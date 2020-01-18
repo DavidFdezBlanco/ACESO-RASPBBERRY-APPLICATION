@@ -1,0 +1,91 @@
+[IDRASP1] [Pulse] 74,sensor1,2020-01-18 17:33:03
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:33:06
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:33:07
+[IDRASP1] [Pulse] 79,sensor1,2020-01-18 17:33:09
+[IDRASP1] [Pulse] 75,sensor1,2020-01-18 17:33:12
+[IDRASP1] [Pulse] 75,sensor1,2020-01-18 17:51:22
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:51:24
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:51:25
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:51:28
+[IDRASP1] [Pulse] 78,sensor1,2020-01-18 17:51:31
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:51:32
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:51:34
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:51:37
+[IDRASP1] [Temperature] 35,sensor2,2020-01-18 17:51:40
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:51:40
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:51:43
+[IDRASP1] [Pulse] 71,sensor1,2020-01-18 17:51:46
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:51:48
+[IDRASP1] [Pulse] 71,sensor1,2020-01-18 17:51:49
+[IDRASP1] [Pulse] 73,sensor1,2020-01-18 17:51:52
+[IDRASP1] [Pulse] 70,sensor1,2020-01-18 17:51:55
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:51:56
+[IDRASP1] [autoeval]undefinedTitle:Autoevaluation 23 november 2019
+Multi:How do you feel today?;Answer:3/5
+Multi: Nausea degree;Answer:2/5
+TextArea: Describe your pain;Answer:
+Multi: Rate your pain from 1 to 5;Answer:2/5
+TextArea: Don't know, just testing;Answer:ss
+
+[IDRASP1] [Pulse] 72,sensor1,2020-01-18 17:51:58
+[IDRASP1] [Pulse] 80,sensor1,2020-01-18 17:52:01
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:52:04
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:52:04
+[IDRASP1] [Pulse] 80,sensor1,2020-01-18 17:52:07
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:52:10
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:52:12
+[IDRASP1] [Pulse] 70,sensor1,2020-01-18 17:52:13
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:52:16
+[IDRASP1] [Pulse] 73,sensor1,2020-01-18 17:52:19
+[IDRASP1] [Temperature] 35,sensor2,2020-01-18 17:52:20
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:52:22
+[IDRASP1] [Pulse] 70,sensor1,2020-01-18 17:52:25
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:52:28
+[IDRASP1] [Pulse] 78,sensor1,2020-01-18 17:52:28
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:52:31
+[IDRASP1] [autoeval]undefinedTitle:Autoevaluation 23 november 2019
+Multi:How do you feel today?;Answer:4/5
+Multi: Nausea degree;Answer:2/5
+TextArea: Describe your pain;Answer:s
+Multi: Rate your pain from 1 to 5;Answer:4/5
+TextArea: Don't know, just testing;Answer:s
+
+[IDRASP1] [Pulse] 71,sensor1,2020-01-18 17:52:34
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:52:36
+[IDRASP1] [Pulse] 80,sensor1,2020-01-18 17:52:37
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:52:40
+[IDRASP1] [Pulse] 74,sensor1,2020-01-18 17:52:43
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:52:44
+[IDRASP1] [Pulse] 78,sensor1,2020-01-18 17:52:46
+[IDRASP1] [Pulse] 71,sensor1,2020-01-18 17:52:49
+[IDRASP1] [Pulse] 73,sensor1,2020-01-18 17:53:19
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:53:22
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:53:24
+[IDRASP1] [Pulse] 70,sensor1,2020-01-18 17:53:25
+[IDRASP1] [Pulse] 80,sensor1,2020-01-18 17:53:28
+[IDRASP1] [Pulse] 78,sensor1,2020-01-18 17:53:31
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:53:32
+[IDRASP1] [Pulse] 72,sensor1,2020-01-18 17:53:34
+[IDRASP1] [Pulse] 71,sensor1,2020-01-18 17:53:37
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:53:40
+[IDRASP1] [Pulse] 75,sensor1,2020-01-18 17:53:40
+[IDRASP1] [Pulse] 70,sensor1,2020-01-18 17:53:43
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:53:46
+[IDRASP1] [Temperature] 35,sensor2,2020-01-18 17:53:48
+[IDRASP1] [autoeval]undefinedTitle:Autoevaluation 23 november 2019
+Multi:How do you feel today?;Answer:4/5
+Multi: Nausea degree;Answer:3/5
+TextArea: Describe your pain;Answer:nn
+Multi: Rate your pain from 1 to 5;Answer:2/5
+TextArea: Don't know, just testing;Answer:hh
+
+[IDRASP1] [Pulse] 77,sensor1,2020-01-18 17:53:49
+[IDRASP1] [Pulse] 71,sensor1,2020-01-18 17:53:52
+[IDRASP1] [Pulse] 76,sensor1,2020-01-18 17:53:55
+[IDRASP1] [Temperature] 37,sensor2,2020-01-18 17:53:56
+[IDRASP1] [Pulse] 73,sensor1,2020-01-18 17:53:58
+[IDRASP1] [Pulse] 72,sensor1,2020-01-18 17:54:01
+[IDRASP1] [Temperature] 36,sensor2,2020-01-18 17:54:04
+[IDRASP1] [Pulse] 70,sensor1,2020-01-18 17:54:04
+[IDRASP1] [Pulse] 72,sensor1,2020-01-18 17:54:07
+[IDRASP1] [Pulse] 78,sensor1,2020-01-18 17:54:10

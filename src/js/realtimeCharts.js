@@ -1,5 +1,7 @@
+const fs = require('fs')
+
 function readProfile(listOfMetrics){
-    text = readTextFile("../../Backend/userData.txt");
+    text = readTextFile("../../Backend/receivedFiles/UserData/userData.txt");
     textByLanes = text.split("\n")
     window.UserID = textByLanes[0].split(":")[1]
     window.UserName = textByLanes[1].split(":")[1]
@@ -65,11 +67,20 @@ function getDateDownLimit(){
     var today = new Date();
     var month = parseInt(('0'+today.getMonth()).slice(-2)) + 1;
     var day = ('0'+today.getDate()).slice(-2);
-    var hour = parseInt(('0'+today.getHours()).slice(-2)) - 2;
-    var mins = ('0'+today.getMinutes()).slice(-2);
+    var hour = parseInt(('0'+today.getHours()).slice(-2)) - 1;
+    var mins = ('0'+today.getMinutes()).slice(-2) - 6;
+    if (mins < 10 && mins >= 0){
+        mins = '0'+mins
+    }
+    if(mins < 0)
+    {
+        mins = 60 + mins
+        hour = parseInt(('0'+today.getHours()).slice(-2)) - 2;
+    }
     var secs = ('0'+today.getSeconds()).slice(-2);
     var date = today.getFullYear()+'-'+month+'-'+day;
     var time = hour + ":" + mins + ":" + secs;
+//    console.log(date + " " + time)
     return date + " " + time
 }
 
@@ -96,7 +107,7 @@ function overwriteCharts( metricList ){
           type: 'date',
           range: [down, top],
           title: {
-            text: 'Time',
+            text: 'Temps',
             font: {
               size: 12,
               color: '#7f7f7f'
@@ -245,6 +256,8 @@ function createGraph(metric, swipWrap, swipCont)
     swipCont.appendChild(swipWrap);
 }
 
+
+
 function fullfillForm()
 {
     document.getElementById('patientid').innerHTML = UserID;
@@ -254,6 +267,11 @@ function fullfillForm()
     document.getElementById('buttonPhone').innerHTML = ContactPhone;
     document.getElementById('hospital').innerHTML = Hospital;
     document.getElementById('hospaddress').innerHTML = HospitalAddr;
+    if (fs.existsSync('Backend/receivedFiles/Autoeval/autoevaluationData.txt')) {
+      document.getElementById('autoevalActive').innerHTML = "Yes";
+    } else {
+      document.getElementById('autoevalActive').innerHTML = "No";
+    }
 }
 
 function changeBullets()
@@ -270,6 +288,7 @@ for (let metric in listOfMetrics)
 {
     overwriteCharts(listOfMetrics[metric]);
     setInterval(function(){overwriteCharts(listOfMetrics[metric]);},5000)
+    setInterval(function(){fullfillForm();},10000)
 }
 
 changeBullets()
