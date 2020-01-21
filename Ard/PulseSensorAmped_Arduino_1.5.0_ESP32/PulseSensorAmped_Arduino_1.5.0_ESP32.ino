@@ -22,8 +22,8 @@
 
 const char* ssid = "POCOPHONE";
 const char* pass = "david333";
-const char* mqtt_server = "192.168.43.225";
-const int port = 8081;
+const char* mqtt_server = "192.168.43.4";
+const int port = 1883;
 const String idArd = "ARD111";
 
 
