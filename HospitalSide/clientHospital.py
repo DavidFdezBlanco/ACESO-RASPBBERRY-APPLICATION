@@ -2,8 +2,8 @@ import paho.mqtt.client as mqtt #import the client1
 import paho.mqtt.publish as publish
 from time import gmtime, strftime
 import datetime
-from tinydb import TinyDB, Query
 import time, threading
+from tinydb import TinyDB, Query
 from bigchaindb_driver import BigchainDB
 from bigchaindb_driver.crypto import generate_keypair
 import zlib

@@ -77,10 +77,14 @@ function getDateDownLimit(){
         mins = 60 + mins
         hour = parseInt(('0'+today.getHours()).slice(-2)) - 2;
     }
+    if(hour == -1)
+    {
+        hour = 23
+    }
     var secs = ('0'+today.getSeconds()).slice(-2);
     var date = today.getFullYear()+'-'+month+'-'+day;
     var time = hour + ":" + mins + ":" + secs;
-//    console.log(date + " " + time)
+    //console.log(date + " " + time)
     return date + " " + time
 }
 
@@ -92,7 +96,12 @@ function getDateTopLimit(){
     var mins = ('0'+today.getMinutes()).slice(-2);
     var secs = ('0'+today.getSeconds()).slice(-2);
     var date = today.getFullYear()+'-'+month+'-'+day;
+    if(hour == '-1')
+    {
+        hour = 23
+    }
     var time = hour + ":" + mins + ":" + secs;
+//    console.log(date + " " + time)
     return date + " " + time
 }
 

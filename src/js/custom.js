@@ -39,14 +39,6 @@
         }
     });
 
-    // Accordion & Toggle
-    $('.accordion-wrap.type-accordion').collapsible({
-        accordion: true,
-        contentOpen: 0,
-        arrowRclass: 'arrow-r',
-        arrowDclass: 'arrow-d'
-    });
-
     $('.accordion-wrap .entry-title').on('click', function() {
         $('.accordion-wrap .entry-title').removeClass('active');
         $(this).addClass('active');
