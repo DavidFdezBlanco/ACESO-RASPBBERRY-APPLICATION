@@ -1,6 +1,6 @@
 # ACESO-RASPBBERRY-APPLICATION
 
-## Sur linux based systems 
+## On linux based systems 
 
 Clone the file into a local repository with git clone ....
 
